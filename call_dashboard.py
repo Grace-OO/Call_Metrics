@@ -15,7 +15,7 @@ st.markdown("[Click here to explore the project code on GitHub.](https://github.
 # Load data
 @st.cache_data
 def load_data():
-    df = pd.read_csv("01 Call-Center-Dataset.csv")
+    df = pd.read_csv("Call_Center_Dataset.csv")
     df.columns = (
     df.columns.str.strip()                             # Remove leading/trailing spaces
               .str.replace(' ', '_')                   # Replace spaces with underscores
@@ -137,7 +137,7 @@ if show_chart4:
     ax.grid(True)
     st.pyplot(fig4)
     st.write("Satisfaction ratings drop on Fridays, Saturdays, and Sundays, but this decline is not linked to call volume.")
-    st.image('satisfaction by call volume .png')
+    st.image('satisfaction_by_duration_of_call.png')
     st.write('Further investigation into service quality or staffing factors during weekends may be warranted.')
 
 if show_chart5:
