@@ -180,7 +180,7 @@ Analysis of Q1 2021 support call data shows that customer satisfaction at Halo i
 
 4. **Call topic and agent** differences show no significant influence on ratings.
 
-The customer support department should shift its focus toward improving resolution quality and investigating time-based performance patterns to enhance customer satisfaction.
+The customer support department should shift its focus towards improving resolution quality and investigating time-based performance patterns to enhance customer satisfaction.
 ''')
 
 
