@@ -74,13 +74,13 @@ open notebook.ipynb
 
 ## 📈 Sample Visualizations
 
-![Average satisfaction by time of the day](Average satisfaction by time of the day.png)
-![Satisfaction by duration of call](satisfaction by duration of call.png]
+> ![Average satisfaction by time of the day](Average satisfaction by time of the day.png)
+> ![Satisfaction by duration of call](satisfaction by duration of call.png]
 ---
 
 ## ✅ Conclusion
 
-> Analysis of Q1 2021 support call data shows that customer satisfaction at Halo is driven more by **call quality** and **resolution efficiency** than by response speed, call topic, or agent identity.
+> The analysis of Q1 2021 support call data shows that customer satisfaction at Halo is driven more by **call quality** and **resolution efficiency** than by response speed, call topic, or agent identity.
 > The customer support department should shift its focus toward improving resolution quality and investigating time-based performance patterns to enhance customer satisfaction.
 
 ---
