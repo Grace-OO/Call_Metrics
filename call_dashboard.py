@@ -105,8 +105,10 @@ if show_chart2:
 
 if show_chart3:
     st.subheader("**3. Does the hour of day impact satisfaction?**")
+
+    hour_data = filtered_df.dropna(subset=['hour'])  # Drop rows with NaN in hour
     
-    hourly_satisfaction = filtered_df.groupby('hour')['satisfaction_rating'].mean()
+    hourly_satisfaction = hour_data.groupby('hour')['satisfaction_rating'].mean()
 
     fig3, ax = plt.subplots(figsize= (10,7))
     hourly_satisfaction.plot(kind='line', marker='o', ax=ax, color= 'steelblue')
