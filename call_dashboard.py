@@ -26,15 +26,20 @@ def load_data():
         ordered=True
     )
     df['speed_rounded'] = df['speed_of_answer_in_seconds'].round()
-    # Ensure 'time' column is a datetime-like column so we can extract the hour
-    if pd.api.types.is_string_dtype(df['time']):
-        df['time'] = pd.to_datetime(df['time'], format='%H:%M:%S', errors='coerce')
+    from datetime import time, datetime
 
-    if pd.api.types.is_datetime64_any_dtype(df['time']):
-        df['hour'] = df['time'].dt.hour
-    elif pd.api.types.is_object_dtype(df['time']):
-    # It's likely a datetime.time object — use apply safely
-        df['hour'] = df['time'].apply(lambda t: t.hour if pd.notnull(t) else None)
+    def extract_hour(val):
+        try:
+            if isinstance(val, str):
+                return pd.to_datetime(val, format='%H:%M:%S', errors='coerce').hour
+            elif isinstance(val, time):
+                return val.hour
+            elif isinstance(val, datetime):
+                return val.hour
+        except:
+            return None
+
+    df['hour'] = df['time'].apply(extract_hour)
 
     return df
 
