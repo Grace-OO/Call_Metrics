@@ -106,17 +106,21 @@ if show_chart2:
 if show_chart3:
     st.subheader("**3. Does the hour of day impact satisfaction?**")
 
-    hour_data = filtered_df.dropna(subset=['hour'])  # Drop rows with NaN in hour
+    hourly_data = filtered_df.dropna(subset=['hour'])
     
-    hourly_satisfaction = hour_data.groupby('hour')['satisfaction_rating'].mean()
+    if not hourly_data.empty:
+        hourly_satisfaction = hourly_data.groupby('hour')['satisfaction_rating'].mean()
 
-    fig3, ax = plt.subplots(figsize= (10,7))
-    hourly_satisfaction.plot(kind='line', marker='o', ax=ax, color= 'steelblue')
-    ax.set_title("Satisfaction by Hour of Day")
-    ax.set_xlabel("Hour")
-    ax.set_ylabel("Avg Satisfaction Rating")
-    ax.grid(True)
-    st.pyplot(fig3)
+        fig3, ax = plt.subplots(figsize=(10, 7))
+        hourly_satisfaction.plot(kind='line', marker='o', ax=ax, color='steelblue')
+        ax.set_title("Satisfaction by Hour of Day")
+        ax.set_xlabel("Hour")
+        ax.set_ylabel("Avg Satisfaction Rating")
+        ax.grid(True)
+        st.pyplot(fig3)
+    else:
+        st.warning("No data available for selected filters.")
+
     st.write("""
     Customer satisfaction ratings dip noticeably around 2 PM before rising again at 6 PM. 
     
