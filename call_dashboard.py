@@ -137,7 +137,15 @@ if show_chart4:
     ax.grid(True)
     st.pyplot(fig4)
     st.write("Satisfaction ratings drop on Fridays, Saturdays, and Sundays, but this decline is not linked to call volume.")
-    st.image('satisfaction_by_call_volume.png')
+    
+    fig, ax1 = plt.subplots(figsize= (10,7))
+    ax1.bar(summary.index, summary['call_volume'], color='darkgray', label='Call Volume')
+    ax2 = ax1.twinx()
+    ax2.plot(summary.index, summary['satisfaction_rating'], color='steelblue', marker='o', label='Satisfaction')
+    ax1.set_ylabel("Call Volume")
+    ax2.set_ylabel("Avg Satisfaction Rating")
+    ax1.set_title("Satisfaction and Call Volume by Day")
+    st.pyplot(fig)
     st.write('Further investigation into service quality or staffing factors during weekends may be warranted.')
 
 if show_chart5:
