@@ -175,6 +175,6 @@ The customer support department should shift its focus toward improving resoluti
 ''')
 
 
-# Optional: Display filtered data
+# Display filtered data
 with st.expander("📄 View Filtered Data"):
     st.dataframe(filtered_df)
