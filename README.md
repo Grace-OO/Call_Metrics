@@ -74,9 +74,8 @@ open notebook.ipynb
 
 ## 📈 Sample Visualizations
 
-![Average satisfaction by time of the day](Average satisfaction by time of the day.png)
-
-![Satisfaction by duration of call](satisfaction by duration of call.png)
+![Average satisfaction by time of the day](Average%20satisfaction%20by%20time%20of%20the%20day.png)
+![Satisfaction by duration of call](satisfaction%20by%20duration%20of%20call.png)
 
 ---
 
