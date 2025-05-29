@@ -137,7 +137,7 @@ if show_chart4:
     ax.grid(True)
     st.pyplot(fig4)
     st.write("Satisfaction ratings drop on Fridays, Saturdays, and Sundays, but this decline is not linked to call volume.")
-    st.image('satisfaction_by_duration_of_call.png')
+    st.image('satisfaction_by_call_volume.png')
     st.write('Further investigation into service quality or staffing factors during weekends may be warranted.')
 
 if show_chart5:
