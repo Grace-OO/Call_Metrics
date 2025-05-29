@@ -168,7 +168,7 @@ if show_chart6:
 
 st.title('Executive Summary')
 st.write('''
-Analysis of Q1 2021 support call data shows that customer satisfaction at Halo is driven more by **call quality** and **resolution efficiency** than by response speed, call topic, or agent identity.
+The analysis of Q1 2021 support call data shows that customer satisfaction at Halo is driven more by **call quality** and **resolution efficiency** than by response speed, call topic, or agent identity.
 
 **Key findings:**
 
