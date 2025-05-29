@@ -1,3 +1,4 @@
+%%writefile call_dashboard.py
 
 import streamlit as st
 import pandas as pd
@@ -15,32 +16,28 @@ st.markdown("[Click here to explore the project code on GitHub.](https://github.
 # Load data
 @st.cache_data
 def load_data():
-    df = pd.read_csv("callmetrics.csv")
+    df = pd.read_csv("01 Call-Center-Dataset.csv")
+    df.columns = (
+    df.columns.str.strip()                             # Remove leading/trailing spaces
+              .str.replace(' ', '_')                   # Replace spaces with underscores
+              .str.replace(r'\W+', '', regex=True)     # Remove non-alphanumeric characters
+              .str.lower())                             # Lowercase everything
+
     df['date'] = pd.to_datetime(df['date'])
     df['avgtalkduration'] = pd.to_timedelta(df['avgtalkduration'])
     df['talk_minutes'] = df['avgtalkduration'].dt.total_seconds() / 60
     df['talk_minutes_rounded'] = df['talk_minutes'].round()
+    df['speed_of_answer_in_seconds']= df['speed_of_answer_in_seconds'].fillna(df['speed_of_answer_in_seconds'].mean())
+    df['satisfaction_rating']= df['satisfaction_rating'].fillna(df['satisfaction_rating'].mean())
+    df['avgtalkduration'] = df['avgtalkduration'].fillna(df['avgtalkduration'].mean())
     df['day_of_week'] = pd.Categorical(
         df['date'].dt.day_name(),
         categories=['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
         ordered=True
     )
     df['speed_rounded'] = df['speed_of_answer_in_seconds'].round()
-    from datetime import time, datetime
-
-    def extract_hour(val):
-        try:
-            if isinstance(val, str):
-                return pd.to_datetime(val, format='%H:%M:%S', errors='coerce').hour
-            elif isinstance(val, time):
-                return val.hour
-            elif isinstance(val, datetime):
-                return val.hour
-        except:
-            return None
-
-    df['hour'] = df['time'].apply(extract_hour)
-
+    df['time'] = pd.to_datetime(df['time'], format='%H:%M:%S').dt.time
+    df['hour'] = pd.to_datetime(df['time'], format='%H:%M:%S').dt.hour
     return df
 
 df = load_data()
@@ -110,22 +107,16 @@ if show_chart2:
 
 if show_chart3:
     st.subheader("**3. Does the hour of day impact satisfaction?**")
-
-    hourly_data = filtered_df.dropna(subset=['hour'])
     
-    if not hourly_data.empty:
-        hourly_satisfaction = hourly_data.groupby('hour')['satisfaction_rating'].mean()
+    hourly_satisfaction = filtered_df.groupby('hour')['satisfaction_rating'].mean()
 
-        fig3, ax = plt.subplots(figsize=(10, 7))
-        hourly_satisfaction.plot(kind='line', marker='o', ax=ax, color='steelblue')
-        ax.set_title("Satisfaction by Hour of Day")
-        ax.set_xlabel("Hour")
-        ax.set_ylabel("Avg Satisfaction Rating")
-        ax.grid(True)
-        st.pyplot(fig3)
-    else:
-        st.warning("No data available for selected filters.")
-
+    fig3, ax = plt.subplots(figsize= (10,7))
+    hourly_satisfaction.plot(kind='line', marker='o', ax=ax, color= 'steelblue')
+    ax.set_title("Satisfaction by Hour of Day")
+    ax.set_xlabel("Hour")
+    ax.set_ylabel("Avg Satisfaction Rating")
+    ax.grid(True)
+    st.pyplot(fig3)
     st.write("""
     Customer satisfaction ratings dip noticeably around 2 PM before rising again at 6 PM. 
     
