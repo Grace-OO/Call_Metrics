@@ -138,13 +138,17 @@ if show_chart4:
     st.pyplot(fig4)
     st.write("Satisfaction ratings drop on Fridays, Saturdays, and Sundays, but this decline is not linked to call volume.")
     
-    fig, ax1 = plt.subplots(figsize= (10,7))
-    ax1.bar(summary.index, summary['call_volume'], color='darkgray', label='Call Volume')
-    ax2 = ax1.twinx()
-    ax2.plot(summary.index, summary['satisfaction_rating'], color='steelblue', marker='o', label='Satisfaction')
-    ax1.set_ylabel("Call Volume")
-    ax2.set_ylabel("Avg Satisfaction Rating")
-    ax1.set_title("Satisfaction and Call Volume by Day")
+    summary = filtered_df.groupby('day_of_week', observed=True).agg({
+    'satisfaction_rating': 'mean',
+    'call_id': 'count'
+    }).rename(columns={'call_id': 'call_volume'})
+    fig, ax_1 = plt.subplots(figsize= (10,7))
+    ax_1.bar(summary.index, summary['call_volume'], color='darkgray', label='Call Volume')
+    ax_2 = ax_1.twinx()
+    ax_2.plot(summary.index, summary['satisfaction_rating'], color='steelblue', marker='o', label='Satisfaction')
+    ax_1.set_ylabel("Call Volume")
+    ax_2.set_ylabel("Avg Satisfaction Rating")
+    ax_1.set_title("Satisfaction and Call Volume by Day")
     st.pyplot(fig)
     st.write('Further investigation into service quality or staffing factors during weekends may be warranted.')
 
