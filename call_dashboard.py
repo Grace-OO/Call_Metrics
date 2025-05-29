@@ -27,7 +27,7 @@ def load_data():
     )
     df['speed_rounded'] = df['speed_of_answer_in_seconds'].round()
     df['time'] = pd.to_datetime(df['time'], format='mixed').dt.time
-    df['hour'] = pd.to_datetime(df['time'], format='mixed').dt.hour
+    df['hour'] = df['time'].apply(lambda t: t.hour)
     return df
 
 df = load_data()
