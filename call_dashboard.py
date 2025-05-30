@@ -196,6 +196,8 @@ The customer support department should shift its focus towards improving resolut
 ''')
 
 
+st.write("📌 **Note: This case study was created for a fictional company and is intended solely to demonstrate my process and skills.**")
+
 # Display filtered data
 with st.expander("📄 View Filtered Data"):
     st.dataframe(filtered_df)
