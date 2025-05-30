@@ -98,3 +98,5 @@ open notebook.ipynb
 
 **Grace Ojeagbase**
 [LinkedIn](www.) | [Portfolio](www.) | [Email](gojeagbase@gmail.com)
+
+📌 **Note: This case study was created for a fictional company and is intended solely to demonstrate my process and skills.**
