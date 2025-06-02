@@ -6,6 +6,7 @@ The Customer Support team at Halo, a subscription-based digital content platform
 To identify and understand the **key factors influencing customer satisfaction** in a support call environment. The project leverages exploratory data analysis and statistical techniques to draw actionable insights.
 
 ---
+[View streamlit data story here](https://callmetrics.streamlit.app/)
 
 ## 📁 Dataset Overview
 
