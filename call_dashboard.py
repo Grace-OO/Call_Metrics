@@ -183,7 +183,7 @@ if show_chart6:
     st.write("Agent performance appears consistent, with no significant impact on customer satisfaction ratings.")
 
 if show_chart7:
-    st.subheader("**Q7:** How does **resolution status** affect customer satisfaction?")
+    st.subheader("**7.** How does **resolution status** affect customer satisfaction?")
     resolution_rating= df.groupby('resolved_numeric')['satisfaction_rating'].mean()
 
     fig7, ax= plt.subplots(figsize= (10,7))
