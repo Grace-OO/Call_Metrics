@@ -11,7 +11,7 @@ st.set_page_config(page_title="📞 Call Metrics: Unpacking Support Satisfaction
 # Title
 st.title("📞 Call Metrics: Unpacking Support Satisfaction")
 st.write("The Customer Support team at Halo, a subscription-based digital content platform, is analyzing support call data for Q1 of 2021 to understand what drives customer satisfaction. This project explores patterns in call metadata, agent performance, and customer outcomes to identify ways to improve service quality.")
-st.markdown("[Click here to explore the project code on GitHub.]https://github.com/Grace-OO/Call_Metrics)")
+st.markdown("[Click here to explore the project code on GitHub.](https://github.com/Grace-OO/Call_Metrics)")
 
 # Load data
 @st.cache_data
