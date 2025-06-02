@@ -1,8 +1,10 @@
+%%writefile call_dashboard.py
 
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib import style
+import seaborn as sns
 
 # Page setup
 st.set_page_config(page_title="📞 Call Metrics: Unpacking Support Satisfaction", layout="centered")
@@ -10,7 +12,7 @@ st.set_page_config(page_title="📞 Call Metrics: Unpacking Support Satisfaction
 # Title
 st.title("📞 Call Metrics: Unpacking Support Satisfaction")
 st.write("The Customer Support team at Halo, a subscription-based digital content platform, is analyzing support call data for Q1 of 2021 to understand what drives customer satisfaction. This project explores patterns in call metadata, agent performance, and customer outcomes to identify ways to improve service quality.")
-st.markdown("[Click here to explore the project code on GitHub.](https://github.com/Grace-OO/Call_Metrics)")
+st.markdown("[Click here to explore the project code on GitHub.]https://github.com/Grace-OO/Call_Metrics)")
 
 # Load data
 @st.cache_data
@@ -28,6 +30,7 @@ def load_data():
     df['talk_minutes_rounded'] = df['talk_minutes'].round()
     df['speed_of_answer_in_seconds']= df['speed_of_answer_in_seconds'].fillna(df['speed_of_answer_in_seconds'].mean())
     df['satisfaction_rating']= df['satisfaction_rating'].fillna(df['satisfaction_rating'].mean())
+    df['resolved_numeric'] = df['resolved'].map({'Y': 1, 'N': 0})
     df['avgtalkduration'] = df['avgtalkduration'].fillna(df['avgtalkduration'].mean())
     df['day_of_week'] = pd.Categorical(
         df['date'].dt.day_name(),
@@ -59,6 +62,7 @@ show_chart3 = st.sidebar.checkbox("📈 Satisfaction by Hour", value=True)
 show_chart4 = st.sidebar.checkbox("📈 Satisfaction by Day", value=True)
 show_chart5 = st.sidebar.checkbox("📈 Satisfaction by Topic", value=True)
 show_chart6 = st.sidebar.checkbox("📈 Satisfaction by Agent", value=True)
+show_chart7 = st.sidebar.checkbox("📈 Satisfaction by Resolution Status", value=True)
 # Filtered data
 filtered_df = df[
     (df['date'] >= pd.to_datetime(start_date)) &
@@ -137,18 +141,19 @@ if show_chart4:
     ax.grid(True)
     st.pyplot(fig4)
     st.write("Satisfaction ratings drop on Fridays, Saturdays, and Sundays, but this decline is not linked to call volume.")
-    
     summary = filtered_df.groupby('day_of_week', observed=True).agg({
-    'satisfaction_rating': 'mean',
-    'call_id': 'count'
+        'satisfaction_rating': 'mean',
+        'call_id': 'count'
     }).rename(columns={'call_id': 'call_volume'})
-    fig, ax_1 = plt.subplots(figsize= (10,7))
-    ax_1.bar(summary.index, summary['call_volume'], color='darkgray', label='Call Volume')
-    ax_2 = ax_1.twinx()
-    ax_2.plot(summary.index, summary['satisfaction_rating'], color='steelblue', marker='o', label='Satisfaction')
-    ax_1.set_ylabel("Call Volume")
-    ax_2.set_ylabel("Avg Satisfaction Rating")
-    ax_1.set_title("Satisfaction and Call Volume by Day")
+
+    fig, ax1 = plt.subplots(figsize= (10,7))
+    ax1.bar(summary.index, summary['call_volume'], color='darkgray', label='Call Volume')
+    ax2 = ax1.twinx()
+    ax2.plot(summary.index, summary['satisfaction_rating'], color='steelblue', marker='o', label='Satisfaction')
+    ax1.set_ylabel("Call Volume")
+    ax2.set_ylabel("Avg Satisfaction Rating")
+    ax1.set_title("Satisfaction and Call Volume by Day")
+    plt.xticks(rotation=45)
     st.pyplot(fig)
     st.write('Further investigation into service quality or staffing factors during weekends may be warranted.')
 
@@ -178,6 +183,19 @@ if show_chart6:
     st.pyplot(fig6)
     st.write("Agent performance appears consistent, with no significant impact on customer satisfaction ratings.")
 
+if show_chart7:
+    st.subheader("**Q7:** How does **resolution status** affect customer satisfaction?")
+    resolution_rating= df.groupby('resolved_numeric')['satisfaction_rating'].mean()
+
+    fig7, ax= plt.subplots(figsize= (10,7))
+    sns.boxplot(x='resolved_numeric', y='satisfaction_rating', data=df, ax=ax, color='steelblue')
+    ax.set_xlabel('Resolved (0 = No, 1 = Yes)')
+    ax.set_ylabel('Satisfaction Rating')
+    ax.set_title('Satisfaction by Resolution Status')
+    ax.grid(True)
+    st.pyplot(fig7)
+    st.write('Customers whose issues were resolved reported higher satisfaction (median rating ~4), while unresolved cases had lower satisfaction (median ~3.5) and more low outliers. This shows resolution improves customer satisfaction.')
+
 st.title('Executive Summary')
 st.write('''
 The analysis of Q1 2021 support call data shows that customer satisfaction at Halo is driven more by **call quality** and **resolution efficiency** than by response speed, call topic, or agent identity.
@@ -192,11 +210,11 @@ The analysis of Q1 2021 support call data shows that customer satisfaction at Ha
 
 4. **Call topic and agent** differences show no significant influence on ratings.
 
+5. **Resolved issues lead to higher satisfaction,** while unresolved cases often result in lower ratings and more dissatisfaction.
+
 The customer support department should shift its focus towards improving resolution quality and investigating time-based performance patterns to enhance customer satisfaction.
 ''')
 
-
-st.write("📌 **Note: This case study was created for a fictional company and is intended solely to demonstrate my process and skills.**")
 
 # Display filtered data
 with st.expander("📄 View Filtered Data"):
