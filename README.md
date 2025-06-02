@@ -56,26 +56,6 @@ The dataset contains the following columns:
 * Satisfaction consistently dips around 2 PM each day and remains lower on weekends, with no correlation to call volume, suggesting other operational or customer experience factors may be affecting performance.
 * Call topic and agent differences show no significant influence on ratings.
 
-Call topic and agent differences show no significant influence on ratings.
----
-
-## 📦 How to Run
-
-```bash
-# Clone the repo
-git clone https://github.com/Grace-OO/Call_Metrics.git
-
-# Open the notebook
-cd Call_Metrics
-open notebook.ipynb
-```
-
----
-
-## 📈 Sample Visualizations
-
-![Average satisfaction by time of the day](Average_satisfaction_by_time_of_the_day.png)
-![Satisfaction by duration of call](satisfaction_by_call_volume.png)
 
 ---
 
@@ -88,15 +68,10 @@ open notebook.ipynb
 
 ## 💡 Future Work
 
-* Add predictive modeling to forecast satisfaction
+* Add predictive modelling to forecast satisfaction
 * Deeper agent-level performance benchmarking
-* Analyze time trends (e.g., changes by month or time of day)
-
 ---
 
-## 🧑‍💻 Author
 
-**Grace Ojeagbase**
-[LinkedIn](www.) | [Portfolio](www.) | [Email](gojeagbase@gmail.com)
 
 📌 **Note: This case study was created for a fictional company and is intended solely to demonstrate my process and skills.**
