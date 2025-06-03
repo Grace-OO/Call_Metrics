@@ -69,6 +69,13 @@ filtered_df = df[
     (df['day_of_week'].isin(days))
 ]
 
+# current satisfaction rating
+metric= filtered_df['satisfaction_rating'].mean()
+st.metric('##### Average Satisfaction Rating:', f"⭐{metric:.1f}/5.0")
+
+st.markdown("---")
+
+
 # Charts
 
 if show_chart1:
